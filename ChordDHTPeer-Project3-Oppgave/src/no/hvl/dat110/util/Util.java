@@ -40,7 +40,16 @@ public class Util {
 		
 		// a formula to check whether an id falls within the set {lower, upper} using the address size as our bound (modulos operation)
 		// it modifies 'upper' and 'id' when lower > upper e.g. set (6, 2) in mod 10 = {6, 7, 8, 9, 0, 1, 2}
-
+		
+		
+		
+//		 implement: read the descriptions above
+//		boolean cond = (id.compareTo(lower) > -1) && (id.compareTo(upper.add(BigInteger.valueOf(1)))==-1); // (lower <= id < upper)
+//		cond = cond || (id.compareTo(lower.add(BigInteger.valueOf(1))) == 1) && (id.compareTo(upper)<1); // (lower < id <= upper)
+//		cond = cond || (id.compareTo(lower.add(BigInteger.valueOf(1))) == 1) && (id.compareTo(upper.add(BigInteger.valueOf(1)))==-1); //(lower < id < upper)
+//		cond = cond || (lower.compareTo(id) == 1) && upper.compareTo(id)<1;
+//		cond = cond || (id.compareTo(lower) == -1) && (id.compareTo(upper)==-1) && (lower.compareTo(upper)==1);
+		
 		System.out.println("COMPUTE");
 		System.out.println(lower.toString() + "<=" + id.toString() + "<=" + upper.toString());
 		
@@ -59,8 +68,8 @@ public class Util {
 
 //		
 		cond = cond || id.compareTo(lower)>-1 && id.compareTo(upper)<1;
-//		cond = cond || (id.compareTo(lower.add(BigInteger.valueOf(1))) == 1) && (id.compareTo(upper)<1);
-//		cond = cond || (id.compareTo(lower) == -1) && (id.compareTo(upper)==-1) && (lower.compareTo(upper)==1);
+		cond = cond || (id.compareTo(lower.add(BigInteger.valueOf(1))) == 1) && (id.compareTo(upper)<1);
+		cond = cond || (id.compareTo(lower) == -1) && (id.compareTo(upper)==-1) && (lower.compareTo(upper)==1);
 //		
 		System.out.println(cond);
 		return cond;

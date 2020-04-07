@@ -38,7 +38,7 @@ public class ChordLookup {
 		NodeInterface stub = Util.getProcessStub(successor.getNodeName(), successor.getPort());
 
 		System.out.println("IN FINDSUCC");
-		System.out.println(this.node.getNodeID().toString() + " " + stub.getNodeID().toString());
+		System.out.println(this.node.getNodeID().toString() + " " + successor.getNodeID().toString());
 		// check that key is a member of the set {nodeid+1,...,succID} i.e. (nodeid+1 <= key <= succID)
 	
 		// computeLogic(key, nodeid+1, succID); use it this way
@@ -67,7 +67,6 @@ public class ChordLookup {
 		
 		// collect the entries in the finger table for this node
 		List<NodeInterface> fingertable = this.node.getFingerTable();
-		System.out.println(fingertable);
 
 		NodeInterface curr=null;
 		// starting from the last entry, iterate over the finger table
@@ -90,7 +89,7 @@ public class ChordLookup {
 			}
 		}
 		// 
-		return null;
+		return (NodeInterface) this;
 	}
 	
 	public void copyKeysFromSuccessor(NodeInterface succ) {
