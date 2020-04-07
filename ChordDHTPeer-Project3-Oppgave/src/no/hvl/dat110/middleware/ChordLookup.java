@@ -36,25 +36,27 @@ public class ChordLookup {
 
 		// get the stub for this successor (Util.getProcessStub())
 		NodeInterface stub = Util.getProcessStub(successor.getNodeName(), successor.getPort());
-
-		System.out.println("IN FINDSUCC");
-		System.out.println(this.node.getNodeID().toString() + " " + successor.getNodeID().toString());
-		// check that key is a member of the set {nodeid+1,...,succID} i.e. (nodeid+1 <= key <= succID)
-	
-		// computeLogic(key, nodeid+1, succID); use it this way
-		if(Util.computeLogic(key, 
-							this.node.getNodeID().add(BigInteger.valueOf(1)), 
-							stub.getNodeID())) {
-			// return the successor
-			return stub;
-		} else {
-			// if logic returns false; call findHighestPredecessor(key)
-			NodeInterface highest_pred = findHighestPredecessor(key);
-			return highest_pred.findSuccessor(key);
-		}
 		
-		// do return highest_pred.findSuccessor(key) - This is a recursive call until logic returns true
-			
+		if(stub != null) {
+			System.out.println("IN FINDSUCC");
+			System.out.println(this.node.getNodeID().toString() + " " + successor.getNodeID().toString());
+			// check that key is a member of the set {nodeid+1,...,succID} i.e. (nodeid+1 <= key <= succID)
+		
+			// computeLogic(key, nodeid+1, succID); use it this way
+			if(Util.computeLogic(key, 
+								this.node.getNodeID().add(BigInteger.valueOf(1)), 
+								successor.getNodeID())) {
+				// return the successor
+				return stub;
+			} else {
+				// if logic returns false; call findHighestPredecessor(key)
+				NodeInterface highest_pred = findHighestPredecessor(key);
+				// do return highest_pred.findSuccessor(key) - This is a recursive call until logic returns true
+				return highest_pred.findSuccessor(key);
+			}	
+		} else { // re chord shit
+			return null;
+		}
 	}
 	
 	/**
@@ -68,10 +70,9 @@ public class ChordLookup {
 		// collect the entries in the finger table for this node
 		List<NodeInterface> fingertable = this.node.getFingerTable();
 
-		NodeInterface curr=null;
 		// starting from the last entry, iterate over the finger table
 		for (int i = fingertable.size()-1; i > 0; i--) {
-			curr = fingertable.get(i);
+			NodeInterface curr = fingertable.get(i);
 			
 			// obtain stub from the registry
 			NodeInterface stub = Util.getProcessStub(curr.getNodeName(), curr.getPort());
@@ -81,7 +82,7 @@ public class ChordLookup {
 			System.out.println(this.node.getNodeID().toString() + " " + stub.getNodeID().toString());
 			
 			// use computeLogic(finger, nodeID+1, key-1);
-			boolean isMember = Util.computeLogic(stub.getNodeID(), 
+			boolean isMember = Util.computeLogic(curr.getNodeID(), 
 												 this.node.getNodeID().add(BigInteger.valueOf(1)), 
 												 key.subtract(BigInteger.valueOf(1)));
 			if(isMember) {

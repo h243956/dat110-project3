@@ -19,7 +19,7 @@ public class Hash {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-	    		
+		
 		return ret;
 	}
 	
