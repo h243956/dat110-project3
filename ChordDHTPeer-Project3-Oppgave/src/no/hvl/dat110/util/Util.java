@@ -40,11 +40,29 @@ public class Util {
 		
 		// a formula to check whether an id falls within the set {lower, upper} using the address size as our bound (modulos operation)
 		// it modifies 'upper' and 'id' when lower > upper e.g. set (6, 2) in mod 10 = {6, 7, 8, 9, 0, 1, 2}
-		
-		// implement: read the descriptions above
-		boolean cond = false;
 
+		System.out.println("COMPUTE");
+		System.out.println(lower.toString() + "<=" + id.toString() + "<=" + upper.toString());
 		
+		boolean cond = false;
+		
+		if(lower.compareTo(upper) == 1) {
+			upper = upper.add(Hash.addressSize());
+			if(id.compareTo(BigInteger.valueOf(0))>-1 || id.compareTo(lower)==-1) {
+				id = id.add(Hash.addressSize());
+				cond = true;
+			}
+		}
+		
+		System.out.println("POSTCOMPUTE");
+		System.out.println(lower.toString() + "<=" + id.toString() + "<=" + upper.toString());
+
+//		
+		cond = cond || id.compareTo(lower)>-1 && id.compareTo(upper)<1;
+//		cond = cond || (id.compareTo(lower.add(BigInteger.valueOf(1))) == 1) && (id.compareTo(upper)<1);
+//		cond = cond || (id.compareTo(lower) == -1) && (id.compareTo(upper)==-1) && (lower.compareTo(upper)==1);
+//		
+		System.out.println(cond);
 		return cond;
 	}
 	
@@ -78,7 +96,7 @@ public class Util {
 	
 	/**
 	 * This method is used when processes are running on a single computer
-	 * @return the registry for the found ip
+	 * @return the registry for the found ip 
 	 * @throws RemoteException 
 	 * @throws NumberFormatException 
 	 */

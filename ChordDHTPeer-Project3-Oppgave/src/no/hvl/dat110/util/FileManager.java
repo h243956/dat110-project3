@@ -15,12 +15,10 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import no.hvl.dat110.middleware.Message;
 import no.hvl.dat110.rpc.interfaces.NodeInterface;
-import no.hvl.dat110.util.Hash;
 
 public class FileManager {
 	
@@ -54,15 +52,11 @@ public class FileManager {
 	
 	public void createReplicaFiles() {
 	 	
-		// implement
-		
-		// set a loop where size = numReplicas
-		
-		// replicate by adding the index to filename
-		
-		// hash the replica
-		
-		// store the hash in the replicafiles array.
+		for (int i = 0; i < Util.numReplicas; i++) {
+			String filename = this.filename+i;
+			BigInteger hash = Hash.hashOf(filename);
+			replicafiles[i]=hash;
+		}
 
 	}
 	
